@@ -5,7 +5,6 @@
 //Used for the overall flow of the application.
 /////////////////////////////////////////////////////////////////
 //#region 
-
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -81,10 +80,37 @@ function searchByName(people){
   // TODO: find the person single person object using the name they entered.
   return foundPerson;
 }
+function searchByEyeColor(people){
+  let eyeColor = promptFor("What is the person's eye color?", autoValid)
+
+  let foundEyeColor = people.filter(function(potentialMatch){
+    if(potentialMatch.eyeColor === eyeColor){
+      return true;
+  }
+    else{
+      return false
+    }
+})
+
+return foundEyeColor
+}
+
+
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
-function searchByEyeColor(people){
+function searchByGender(people){
+  let gender = promptFor("What is the person's gender?", autoValid)
 
+  let foundGender = people.filter(function(potentialMatch){
+    if(potentialMatch.gender === gender){
+      return true;
+  }
+    else{
+      return false
+    }
+})
+
+return foundGender
 }
 
 function searchByHeightAndWeight(people){
@@ -171,5 +197,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-
+console.log(app())
 //#endregion
