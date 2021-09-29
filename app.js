@@ -118,14 +118,28 @@ function searchByHeightAndWeight(people){
   let weight = promptFor("What is the person's weight? ", autoValid)
 
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.height === height && potentialMatch.weight === weight){
+    if(potentialMatch.height == height && potentialMatch.weight == weight){
       return true;
     }
     else {
       return false;
     }
   })
-  return foundPerson
+  console.log(foundPerson)
+}
+
+function searchByOccupation(people){
+  let occupation = promptFor("What is the person's job? ", autoValid)
+
+  let foundPerson = people.filter(function(potentialMatch){
+    if (potentialMatch.occupation == occupation){
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  console.log(foundPerson)
 }
 
 //TODO: add other trait filter functions here.
@@ -198,5 +212,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-console.log(searchByHeightAndWeight(data))
+console.log(searchByOccupation(data))
 //#endregion
