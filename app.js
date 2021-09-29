@@ -114,10 +114,11 @@ return foundGender
 }
 
 function searchByHeightAndWeight(people){
-  let heightAndWeight = promptFor("What is the person's height and weight? ")
+  let height = promptFor("What is the person's height? ", autoValid)
+  let weight = promptFor("What is the person's weight? ", autoValid)
 
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.height === heightAndWeight && potentialMatch.weight === weight){
+    if(potentialMatch.height === height && potentialMatch.weight === weight){
       return true;
     }
     else {
@@ -197,5 +198,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-console.log(app())
+console.log(searchByHeightAndWeight(data))
 //#endregion
