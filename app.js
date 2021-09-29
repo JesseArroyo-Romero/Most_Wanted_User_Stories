@@ -9,12 +9,14 @@
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
+  let newSearch;
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
       break;
     case 'no':
       // TODO: search by traits
+      newSearch = searchByEyeColor(people)
       break;
       default:
     app(people); // restart app
@@ -78,8 +80,9 @@ function searchByName(people){
     }
   })
   // TODO: find the person single person object using the name they entered.
-  return foundPerson;
+  return displayPerson(foundPerson[0]);
 }
+
 function searchByEyeColor(people){
   let eyeColor = promptFor("What is the person's eye color?", autoValid)
 
@@ -166,7 +169,15 @@ function displayPerson(person){
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   // TODO: finish getting the rest of the information to display.
-  alert(personInfo);
+  personInfo += "gender: " + person.gender + "\n";
+  personInfo += "dob: " + person.dob + "\n";
+  personInfo += "height: " + person.height + "\n";
+  personInfo += "weight: " + person.weight + "\n";
+  personInfo += "eyecolor: " + person.eyeColor + "\n";
+  personInfo += "occupation: " + person.occupation + "\n";
+  personInfo += "parents: " + person.parents + "\n";
+  personInfo += "current spouse: " + person.currentSpouse + "\n";
+ alert(personInfo);
 }
 
 //#endregion
@@ -212,5 +223,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-console.log(searchByOccupation(data))
+console.log(app(data))
 //#endregion
