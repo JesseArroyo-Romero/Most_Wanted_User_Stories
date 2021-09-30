@@ -198,5 +198,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-console.log(searchByHeightAndWeight(data))
+console.log(app(data));
 //#endregion
