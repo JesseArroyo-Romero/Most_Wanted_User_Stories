@@ -10,12 +10,14 @@ function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
   let newSearch;
+  let searchMultiple;
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
       break;
     case 'no':
       // TODO: search by traits
+      searchMultiple = searchByCriteria(people, data);
       newSearch = searchByEyeColor(people)
       break;
       default:
@@ -80,7 +82,11 @@ function searchByName(people){
     }
   })
   // TODO: find the person single person object using the name they entered.
-  return foundPerson[0];
+  return foundPerson;
+}
+
+function searchByCriteria(people){
+  searchByGender(people), searchByHeightAndWeight(people), searchByOccupation(people)
 }
 
 function searchByEyeColor(people){
@@ -250,5 +256,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-console.log(app(data));
+console.log(app(data))
 //#endregion
