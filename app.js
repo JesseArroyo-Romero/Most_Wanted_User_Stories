@@ -10,7 +10,6 @@ function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
   let newSearch;
-  let searchMultiple;
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
@@ -46,7 +45,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
+    displayFamily(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -127,6 +126,19 @@ function searchByGender(people){
 return foundPerson
 }
 
+function searchByID(people, id = promptFor("What's is the person's ID?")){
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.id == id){
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  return foundPerson[0]
+}
+
+
 function searchByHeightAndWeight(people){
   let height = promptFor("What is the person's height? ", autoValid)
   let weight = promptFor("What is the person's weight? ", autoValid)
@@ -179,7 +191,6 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display.
   personInfo += "gender: " + person.gender + "\n";
   personInfo += "dob: " + person.dob + "\n";
   personInfo += "height: " + person.height + "\n";
@@ -193,7 +204,16 @@ function displayPerson(person){
 
 //#endregion
 
+//#region
+//find the person that was passed through family members
+function displayFamily(person, people){
+let currentSpouse = searchByID(people, person.currentSpouse)
+currentSpouse = currentSpouse.firstName + ' ' + currentSpouse.lastName
+console.log (currentSpouse)
 
+}
+
+//#endregion
 
 //Validation functions.
 //Functions to validate user input.
@@ -234,5 +254,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-console.log(app(data))
+app(data);
 //#endregion
