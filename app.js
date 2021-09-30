@@ -44,7 +44,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    displayFamily(person, people);
+    alert(displayFamily(person, people));
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -94,7 +94,7 @@ function searchByEyeColor(people){
     }
 })
 
-return foundEyeColor
+return foundPerson
 }
 
 
@@ -112,7 +112,7 @@ function searchByGender(people){
     }
 })
 
-return foundGender
+return foundPerson
 }
 
 function searchByID(people, id = promptFor("What's is the person's ID?")){
@@ -154,10 +154,50 @@ function searchByOccupation(people){
       return false;
     }
   })
-  return foundPerson
+  return foundPerson;
 }
 
-//TODO: add other trait filter functions here.
+function searchForSpouse(person, people){
+  if (person.currentSpouse == null){
+    return 'No Spouse';
+
+  }
+  else if(person.currentSpouse !== null ){
+    let currentSpouse = searchByID(people, person.currentSpouse)
+    currentSpouse = currentSpouse.firstName + ' ' + currentSpouse.lastName;
+    return currentSpouse
+  }
+}
+
+function searchForParents(person, people){
+  if(person.parents.length == 1){
+    let parent = searchByID(people, person.parents[0]);
+    parent = parent.firstName + ' ' + parent.lastName;
+    return parent;
+  }
+  else if (person.parents.length == 2){
+    let parent1 = searchByID(people, person.parents[0]);
+    let parent2 = searchByID(people, person.parents[1]);
+    let parents = parent1.firstName + ' ' + parent1.lastName +' '+ parent2.firstName + ' ' + parent2.lastName;
+    return parents;
+  }
+  else{
+    return 'No Parents'
+  }
+}
+
+function searchForSiblings(person, people){
+  if (person.parents == null){
+    return 'No Siblings';
+
+  }
+  else if(person.currentSpouse !== null ){
+    let currentSpouse = searchByID(people, person.currentSpouse)
+    currentSpouse = currentSpouse.firstName + ' ' + currentSpouse.lastName;
+    return currentSpouse
+  }
+}
+
 
 
 
@@ -196,10 +236,10 @@ function displayPerson(person){
 //#region
 //find the person that was passed through family members
 function displayFamily(person, people){
-let currentSpouse = searchByID(people, person.currentSpouse)
-currentSpouse = currentSpouse.firstName + ' ' + currentSpouse.lastName
-console.log (currentSpouse)
-
+  let spouse = searchForSpouse(person, people)
+  let parents = searchForParents(person, people)
+  let siblins = searchForSiblings(person, people) 
+  return spouse, parents
 }
 
 //#endregion
