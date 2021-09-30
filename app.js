@@ -17,8 +17,8 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      searchMultiple = searchByCriteria(people, data);
-      newSearch = searchByEyeColor(people)
+      searchMultiple = searchByCriteria(people);
+      // newSearch = searchByEyeColor(people)
       break;
       default:
     app(people); // restart app
@@ -86,7 +86,12 @@ function searchByName(people){
 }
 
 function searchByCriteria(people){
-  searchByGender(people), searchByHeightAndWeight(people), searchByOccupation(people)
+  let person = searchByGender(people)  
+  person = searchByHeightAndWeight(person)
+  person = searchByOccupation(person)
+  console.log(people)
+  console.log(person[0])
+  mainMenu(person, people)
 }
 
 function searchByEyeColor(people){
@@ -110,7 +115,7 @@ return foundEyeColor
 function searchByGender(people){
   let gender = promptFor("What is the person's gender?", autoValid)
 
-  let foundGender = people.filter(function(potentialMatch){
+  let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.gender === gender){
       return true;
   }
@@ -119,7 +124,7 @@ function searchByGender(people){
     }
 })
 
-return foundGender
+return foundPerson
 }
 
 function searchByHeightAndWeight(people){
@@ -134,7 +139,7 @@ function searchByHeightAndWeight(people){
       return false;
     }
   })
-  console.log(foundPerson)
+  return foundPerson
 }
 
 function searchByOccupation(people){
@@ -148,7 +153,7 @@ function searchByOccupation(people){
       return false;
     }
   })
-  console.log(foundPerson)
+  return foundPerson
 }
 
 //TODO: add other trait filter functions here.
