@@ -81,7 +81,7 @@ function searchByName(people){
     }
   })
   // TODO: find the person single person object using the name they entered.
-  return foundPerson;
+  return foundPerson[0];
 }
 
 function searchByCriteria(people){
@@ -136,6 +136,18 @@ function searchByID(people, id = promptFor("What's is the person's ID?")){
     }
   })
   return foundPerson[0]
+}
+
+function searchByParentID(people, id = promptFor("What's is the person's ID?")){
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.parents == parents){
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  return foundPerson
 }
 
 
@@ -198,15 +210,9 @@ function searchForParents(person, people){
 }
 
 function searchForSiblings(person, people){
-  if (person.parents == null){
-    return 'No Siblings';
-
-  }
-  else if(person.currentSpouse !== null ){
-    let currentSpouse = searchByID(people, person.currentSpouse)
-    currentSpouse = currentSpouse.firstName + ' ' + currentSpouse.lastName;
-    return currentSpouse
-  }
+    let siblings = searchForParents(person, people)
+    console.log(siblings)
+    return siblings
 }
 
 
@@ -249,8 +255,8 @@ function displayPerson(person){
 function displayFamily(person, people){
   let spouse = searchForSpouse(person, people)
   let parents = searchForParents(person, people)
-  let siblins = searchForSiblings(person, people) 
-  return spouse, parents
+  let siblings = searchForSiblings(person, people) 
+  return spouse, parents, siblings
 }
 
 //#endregion
