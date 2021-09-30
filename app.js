@@ -90,7 +90,7 @@ function searchByCriteria(people){
   person = searchByOccupation(person)
   console.log(people)
   console.log(person[0])
-  mainMenu(person, people)
+  mainMenu(person[0], people)
 }
 
 function searchByEyeColor(people){
