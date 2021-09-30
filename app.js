@@ -44,7 +44,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
+    displayFamily(person);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -116,6 +116,20 @@ function searchByGender(people){
 return foundGender
 }
 
+function searchByID(people){
+  let id = promptFor("What's is the person's ID?") 
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.id == id){
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  console.log(foundPerson)
+}
+
+
 function searchByHeightAndWeight(people){
   let height = promptFor("What is the person's height? ", autoValid)
   let weight = promptFor("What is the person's weight? ", autoValid)
@@ -168,7 +182,6 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display.
   personInfo += "gender: " + person.gender + "\n";
   personInfo += "dob: " + person.dob + "\n";
   personInfo += "height: " + person.height + "\n";
@@ -182,7 +195,21 @@ function displayPerson(person){
 
 //#endregion
 
+//#region
+//find the person that was passed through family members
+function displayFamily(person){
+let personParents = searchByID(person.parents)
+let personcurrentSpouse = searchByID(person.currentSpouse)
+console.log (personParents, ' ', personcurrentSpouse)
 
+}
+
+
+
+
+
+
+//#endregion
 
 //Validation functions.
 //Functions to validate user input.
