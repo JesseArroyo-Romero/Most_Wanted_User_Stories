@@ -10,14 +10,12 @@ function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
   let newSearch;
-  let searchMultiple;
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
       break;
     case 'no':
       // TODO: search by traits
-      searchMultiple = searchByCriteria(people, data);
       newSearch = searchByEyeColor(people)
       break;
       default:
@@ -46,7 +44,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    displayFamily(person);
+    displayFamily(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -81,12 +79,7 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person single person object using the name they entered.
-  return foundPerson;
-}
-
-function searchByCriteria(people){
-  searchByGender(people), searchByHeightAndWeight(people), searchByOccupation(people)
+  return foundPerson[0];
 }
 
 function searchByEyeColor(people){
@@ -122,8 +115,7 @@ function searchByGender(people){
 return foundGender
 }
 
-function searchByID(people){
-  let id = promptFor("What's is the person's ID?") 
+function searchByID(people, id = promptFor("What's is the person's ID?")){
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.id == id){
       return true;
@@ -132,7 +124,7 @@ function searchByID(people){
       return false;
     }
   })
-  console.log(foundPerson)
+  return foundPerson[0]
 }
 
 
@@ -148,7 +140,7 @@ function searchByHeightAndWeight(people){
       return false;
     }
   })
-  console.log(foundPerson)
+  return foundPerson
 }
 
 function searchByOccupation(people){
@@ -162,7 +154,7 @@ function searchByOccupation(people){
       return false;
     }
   })
-  console.log(foundPerson)
+  return foundPerson
 }
 
 //TODO: add other trait filter functions here.
@@ -203,17 +195,12 @@ function displayPerson(person){
 
 //#region
 //find the person that was passed through family members
-function displayFamily(person){
-let personParents = searchByID(person.parents)
-let personcurrentSpouse = searchByID(person.currentSpouse)
-console.log (personParents, ' ', personcurrentSpouse)
+function displayFamily(person, people){
+let currentSpouse = searchByID(people, person.currentSpouse)
+currentSpouse = currentSpouse.firstName + ' ' + currentSpouse.lastName
+console.log (currentSpouse)
 
 }
-
-
-
-
-
 
 //#endregion
 
@@ -256,5 +243,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-console.log(app(data))
+app(data);
 //#endregion
