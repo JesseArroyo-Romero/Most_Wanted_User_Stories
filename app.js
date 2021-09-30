@@ -16,7 +16,8 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      newSearch = searchByEyeColor(people)
+      searchMultiple = searchByCriteria(people);
+      // newSearch = searchByEyeColor(people)
       break;
       default:
     app(people); // restart app
@@ -79,7 +80,17 @@ function searchByName(people){
       return false;
     }
   })
-  return foundPerson[0];
+  // TODO: find the person single person object using the name they entered.
+  return foundPerson;
+}
+
+function searchByCriteria(people){
+  let person = searchByGender(people)  
+  person = searchByHeightAndWeight(person)
+  person = searchByOccupation(person)
+  console.log(people)
+  console.log(person[0])
+  mainMenu(person[0], people)
 }
 
 function searchByEyeColor(people){
@@ -103,7 +114,7 @@ return foundPerson
 function searchByGender(people){
   let gender = promptFor("What is the person's gender?", autoValid)
 
-  let foundGender = people.filter(function(potentialMatch){
+  let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.gender === gender){
       return true;
   }
