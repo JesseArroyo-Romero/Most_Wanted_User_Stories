@@ -41,7 +41,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+    displayPerson(person);
     break;
     case "family":
     // TODO: get person's family
@@ -80,7 +80,7 @@ function searchByName(people){
     }
   })
   // TODO: find the person single person object using the name they entered.
-  return displayPerson(foundPerson[0]);
+  return foundPerson[0];
 }
 
 function searchByEyeColor(people){
@@ -223,9 +223,5 @@ function autoValid(input){
 function customValidation(input){
   
 }
-<<<<<<< HEAD
 console.log(app(data));
-=======
-console.log(app(data))
->>>>>>> 5845b5ba719cec8b61c7fdf31c2f00bc4fdd79bf
 //#endregion
