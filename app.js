@@ -72,7 +72,7 @@ function mainMenu(person, people){
     alert(displayFamily(person, people));
     break;
     case "descendants":
-    // TODO: get person's descendants
+    alert(searchForKids(person, people));
     break;
     case "restart":
     app(people); // restart
@@ -117,7 +117,7 @@ function searchByCriteria(people){
 }
 
 function searchByEyeColor(people){
-  let eyeColor = promptFor("What is the person's eye color?", autoValid)
+  let eyeColor = promptFor("What is the person's eye color?", autoValid( eyecolor))
 
   let foundEyeColor = people.filter(function(potentialMatch){
     if(potentialMatch.eyeColor === eyeColor){
@@ -355,8 +355,10 @@ function autoValid(input){
 
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
-function customValidation(input){
-  
+function customValidation(input, item){
+  let isValid = people.filter(function(potentialMatch)){
+    if(potentialMatch.item.includes(eye))
+  }
 }
 app(data);
 //#endregion
