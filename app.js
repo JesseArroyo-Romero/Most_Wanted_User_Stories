@@ -137,7 +137,7 @@ function searchByID(people, id = promptFor("What's is the person's ID?")){
   return foundPerson[0]
 }
 
-function searchByParentID(people, person){
+function searchByParentID(person, people){
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.id == person.parents[0] || potentialMatch.id == person.parents[1]){
       return true
@@ -191,7 +191,7 @@ function searchForSpouse(person, people){
   }
 }
 
-function searchForParents(person, people){
+function searchForParents(person, people){              //Returns parents first and last name, trying to change it to return id of parents then run through search for siblings
   if(person.parents.length == 1){
     let parent = searchByID(people, person.parents[0]);
     parent = parent.firstName + ' ' + parent.lastName;
@@ -210,24 +210,27 @@ function searchForParents(person, people){
 
 
 
-function searchForKids(person,people){
-  // someone has them under parent ID
-  let kids = searchByParentID(people, person)
-  console.log(kids.length)
-  return 
-}
+// function searchForKids(person,people){
+//   // someone has them under parent ID
+//   let kids = searchByParentID(people, person)
+//   console.log(kids.length)
+//   return 
+// }
 
 function searchForSiblings(person, people){
-  let bothParents = searchByParentID(people, person)
-  while (bothParents == person.parents){
-    if (bothParents == people.parents){
-      return people
+  let bothParents = searchByParentID(person, people)
+  let parent1 = bothParents[0];
+  let parent2 = bothParents[1];
+  let siblings = people.filter(function(potentialMatch){
+    if (potentialMatch.parents[0] == parent1.id || potentialMatch.parents[1] == parent2.id){
+      return true
     }
     else {
       return false
     }
-  }
-console.log(people)
+  })
+console.log(siblings);
+return siblings;
 
 }
 
@@ -272,9 +275,9 @@ function displayPerson(person){
 function displayFamily(person, people){
   let spouse = searchForSpouse(person, people)
   let parents = searchForParents(person, people)
-  // let siblings 
-  let kids = searchForKids(person, people) 
-  return spouse, parents, kids
+  let siblings = searchForSiblings(person, people)
+  // let kids = searchForKids(person, people) 
+  return spouse, parents, siblings
 }
 
 //#endregion
