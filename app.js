@@ -138,9 +138,9 @@ function searchByID(people, id = promptFor("What's is the person's ID?")){
   return foundPerson[0]
 }
 
-function searchByParentID(people, id = promptFor("What's is the person's ID?")){
+function searchByParentID(people, person){
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.parents == parents){
+    if(potentialMatch.id == person.parents[0, 1]){
       return true;
     }
     else {
@@ -210,10 +210,18 @@ function searchForParents(person, people){
 }
 
 function searchForSiblings(person, people){
-    let siblings = searchForParents(person, people)
-    console.log(siblings)
-    return siblings
+    let parents = searchByParentID(people, person)
+    if (parents == person.parents[0]){
+      return parents
+    }
+    else {
+      return false
+    }
+    console.log(parents)
+    return parents
+
 }
+
 
 
 
