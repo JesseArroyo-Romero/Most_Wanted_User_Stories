@@ -137,9 +137,13 @@ function searchByID(people, id = promptFor("What's is the person's ID?")){
   return foundPerson[0]
 }
 
+<<<<<<< HEAD
 function searchByParentID(people, parents){
+=======
+function searchByParentID(people, person){
+>>>>>>> e9acc9cbb982fbc34b51ff5c245a81fceebf6e05
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.parents == parents){
+    if(potentialMatch.id == person.parents[0, 1]){
       return true;
     }
     else {
@@ -208,6 +212,7 @@ function searchForParents(person, people){
   }
 }
 
+<<<<<<< HEAD
 // function searchForSiblings(person, people){
 //   // people with the same parent ID
 //     let siblings = searchForParentID(person.parents, people)
@@ -220,10 +225,28 @@ function searchForKids(person,people){
   let kids = searchByParentID(people, person)
   console.log(kids.length)
   return
+=======
+function searchForSiblings(person, people){
+    let parents = searchByParentID(people, person)
+    if (parents == person.parents[0]){
+      return parents
+    }
+    else {
+      return false
+    }
+    console.log(parents)
+    return parents
+
+>>>>>>> e9acc9cbb982fbc34b51ff5c245a81fceebf6e05
 }
 
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e9acc9cbb982fbc34b51ff5c245a81fceebf6e05
 //#endregion
 
 //Display functions.
