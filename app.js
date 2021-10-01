@@ -242,6 +242,8 @@ function searchForParents(person, people){              //Returns parents first 
 // }
 
 function searchForSiblings(person, people){
+  let searchedPerson = person
+  let siblingsName = []
   let bothParents = searchByParentID(person, people)
   let parent1 = bothParents[0];
   let parent2 = bothParents[1];
@@ -255,16 +257,20 @@ function searchForSiblings(person, people){
         return false
       }
     })
-    let siblingsName = []
+    }
     for (let i = 0; i < siblings.length; i++){
-      siblingsName[i] = siblings[i].firstName + ' ' + siblings[i].lastName + ' '
+        siblingsName = siblings.reduce(function(searchedPerson){
+        if (searchedPerson != siblings[i]){
+        siblingsName = siblings[i].firstName + ' ' + siblings[i].lastName + ' '
+        }
+        
+      })
+
     }
     return siblingsName
   }
-  else {
-    return 'No siblings.'
-  }
-}
+  
+  
 
 
 
