@@ -131,9 +131,6 @@ function searchByEyeColor(people){
 return foundPerson
 }
 
-
-
-//unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByGender(people){
   let gender = promptFor("What is the person's gender?", autoValid)
 
@@ -265,7 +262,12 @@ function searchForSiblings(person, people){
         return kids
     }
   
+//function to name people
+function giveName() {
+for(let i = 0; i > array.length; ){
 
+}
+}
   
   
   
