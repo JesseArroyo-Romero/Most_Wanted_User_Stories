@@ -14,10 +14,34 @@ function app(people){
     case 'yes':
       searchResults = searchByName(people);
       break;
-    case 'no':
-      // TODO: search by traits
-      searchMultiple = searchByCriteria(people);
-      // newSearch = searchByEyeColor(people)
+      case 'no':
+        multiSearchYesNo = promptFor("Do you know want to search with multiple criteria?", yesNo).toLowerCase();
+        if(multiSearchYesNo === 'yes'){
+        searchMultiple = searchByCriteria(people);
+        }
+        else{
+          switch(/*this will be the switch case for just one search criteria*/){
+            case "":
+            //
+            break;
+            case "":
+            //
+            break;
+            case "":
+            // 
+            break;
+            case "":
+            // 
+            break;
+            case "":
+            //
+            break;
+            case "quit":
+            return; // stop execution
+            default:
+            return mainMenu(person, people); // ask again
+        }
+      }
       break;
       default:
     app(people); // restart app
