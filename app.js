@@ -232,15 +232,6 @@ function searchForParents(person, people){              //Returns parents first 
   }
 }
 
-
-
-// function searchForKids(person,people){
-//   // someone has them under parent ID
-//   let kids = searchByParentID(people, person)
-//   console.log(kids.length)
-//   return 
-// }
-
 function searchForSiblings(person, people){
   let searchedPerson = person
   let bothParents = searchByParentID(person, people)
@@ -259,6 +250,21 @@ function searchForSiblings(person, people){
     }
       return siblings
     }
+
+    function searchForKids(person, people){
+      let kids = []
+        kids = people.filter(function(potentialMatch){
+          if (potentialMatch.parents.includes(person.id)){
+            return true
+          }
+          else {
+            return false
+          }
+          
+        })
+        return kids
+    }
+  
 
   
   
@@ -307,8 +313,8 @@ function displayFamily(person, people){
   let spouse = searchForSpouse(person, people)
   let parents = searchForParents(person, people)
   let siblings = searchForSiblings(person, people)
-  // let kids = searchForKids(person, people) 
-  return spouse, parents, siblings
+  let kids = searchForKids(person, people) 
+  return spouse, parents, siblings, kids
 }
 
 //#endregion
