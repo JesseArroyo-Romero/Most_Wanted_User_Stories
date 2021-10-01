@@ -20,7 +20,7 @@ function app(people){
         searchMultiple = searchByCriteria(people);
         }
         else{
-          switch(/*this will be the switch case for just one search criteria*/){
+          switch(asdfasdf/*this will be the switch case for just one search criteria*/){
             case "":
             //
             break;
@@ -245,18 +245,27 @@ function searchForSiblings(person, people){
   let bothParents = searchByParentID(person, people)
   let parent1 = bothParents[0];
   let parent2 = bothParents[1];
-  let siblings = people.filter(function(potentialMatch){
-    if (potentialMatch.parents[0] == parent1.id || potentialMatch.parents[1] == parent2.id){
-      return true
+  let siblings;
+  if (bothParents.length > 0){
+    siblings = people.filter(function(potentialMatch){
+      if (potentialMatch.parents[0] == parent1.id || potentialMatch.parents[1] == parent2.id){
+        return true
+      }
+      else {
+        return false
+      }
+    })
+    let siblingsName = []
+    for (let i = 0; i < siblings.length; i++){
+      siblingsName[i] = siblings[i].firstName + ' ' + siblings[i].lastName + ' '
     }
-    else {
-      return false
-    }
-  })
-console.log(siblings);
-return siblings;
-
+    return siblingsName
+  }
+  else {
+    return 'No siblings.'
+  }
 }
+
 
 
 
