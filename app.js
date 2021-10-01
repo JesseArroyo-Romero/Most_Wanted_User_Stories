@@ -80,7 +80,6 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person single person object using the name they entered.
   return foundPerson[0];
 }
 
@@ -209,6 +208,15 @@ function searchForParents(person, people){
   }
 }
 
+
+
+function searchForKids(person,people){
+  // someone has them under parent ID
+  let kids = searchByParentID(people, person)
+  console.log(kids.length)
+  return 
+}
+
 function searchForSiblings(person, people){
   let bothParents = searchByParentID(people, person)
   while (bothParents == person.parents){
@@ -219,7 +227,8 @@ function searchForSiblings(person, people){
       return false
     }
   }
-  console.log(people)
+console.log(people)
+
 }
 
 
@@ -263,8 +272,9 @@ function displayPerson(person){
 function displayFamily(person, people){
   let spouse = searchForSpouse(person, people)
   let parents = searchForParents(person, people)
-  let siblings = searchForSiblings(person, people) 
-  return spouse, parents, siblings
+  // let siblings 
+  let kids = searchForKids(person, people) 
+  return spouse, parents, kids
 }
 
 //#endregion
