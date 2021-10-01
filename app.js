@@ -243,14 +243,13 @@ function searchForParents(person, people){              //Returns parents first 
 
 function searchForSiblings(person, people){
   let searchedPerson = person
-  let siblingsName = []
   let bothParents = searchByParentID(person, people)
   let parent1 = bothParents[0];
   let parent2 = bothParents[1];
   let siblings;
   if (bothParents.length > 0){
     siblings = people.filter(function(potentialMatch){
-      if (potentialMatch.parents[0] == parent1.id || potentialMatch.parents[1] == parent2.id){
+      if ((potentialMatch.parents.includes(parent1.id) || potentialMatch.parents.includes(parent2.id)) && searchedPerson.id != potentialMatch.id){
         return true
       }
       else {
@@ -258,17 +257,10 @@ function searchForSiblings(person, people){
       }
     })
     }
-    for (let i = 0; i < siblings.length; i++){
-        siblingsName = siblings.reduce(function(searchedPerson){
-        if (searchedPerson != siblings[i]){
-        siblingsName = siblings[i].firstName + ' ' + siblings[i].lastName + ' '
-        }
-        
-      })
-
+      return siblings
     }
-    return siblingsName
-  }
+
+  
   
   
 
