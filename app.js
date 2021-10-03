@@ -15,7 +15,7 @@ function app(people){
       searchResults = searchByName(people);
       break;
       case 'no':
-        multiSearchYesNo = promptFor("Do you know want to search with multiple criteria?", yesNo).toLowerCase();
+        let multiSearchYesNo = promptFor("Do you know want to search with multiple criteria?", yesNo).toLowerCase();
         if(multiSearchYesNo === 'yes'){
         searchMultiple = searchByCriteria(people);
         }
@@ -93,8 +93,8 @@ function mainMenu(person, people){
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people){
-  let firstName = promptFor("What is the person's first name?", autoValid);
-  let lastName = promptFor("What is the person's last name?", autoValid);
+  let firstName = promptFor("What is the person's first name?", customValidation());
+  let lastName = promptFor("What is the person's last name?", customValidation());
 
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.firstName === firstName && potentialMatch.lastName === lastName){
@@ -117,7 +117,7 @@ function searchByCriteria(people){
 }
 
 function searchByEyeColor(people){
-  let eyeColor = promptFor("What is the person's eye color?", autoValid( eyecolor))
+  let eyeColor = promptFor("What is the person's eye color?", customValidation())
 
   let foundEyeColor = people.filter(function(potentialMatch){
     if(potentialMatch.eyeColor === eyeColor){
@@ -135,7 +135,7 @@ return foundPerson
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByGender(people){
-  let gender = promptFor("What is the person's gender?", autoValid)
+  let gender = promptFor("What is the person's gender?", customValidation, people) 
 
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.gender === gender){
@@ -175,8 +175,8 @@ function searchByParentID(person, people){
 
 
 function searchByHeightAndWeight(people){
-  let height = promptFor("What is the person's height? ", autoValid)
-  let weight = promptFor("What is the person's weight? ", autoValid)
+  let height = promptFor("What is the person's height? ", customValidation())
+  let weight = promptFor("What is the person's weight? ", customValidation())
 
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.height == height && potentialMatch.weight == weight){
@@ -190,7 +190,7 @@ function searchByHeightAndWeight(people){
 }
 
 function searchByOccupation(people){
-  let occupation = promptFor("What is the person's job? ", autoValid)
+  let occupation = promptFor("What is the person's job? ", customValidation())
 
   let foundPerson = people.filter(function(potentialMatch){
     if (potentialMatch.occupation == occupation){
@@ -328,11 +328,11 @@ function displayFamily(person, people){
 //response: Will capture the user input.
 //isValid: Will capture the return of the validation function callback. true(the user input is valid)/false(the user input was not valid).
 //this function will continue to loop until the user enters something that is not an empty string("") or is considered valid based off the callback function(valid).
-function promptFor(question, valid){
+function promptFor(question, valid, people){
   let isValid;
   do{
     var response = prompt(question).trim();
-    isValid = valid(response);
+    isValid = valid(response, people);
   } while(response === ""  ||  isValid === false)
   return response;
 }
@@ -355,10 +355,27 @@ function autoValid(input){
 
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
-function customValidation(input, item){
-  let isValid = people.filter(function(potentialMatch)){
-    if(potentialMatch.item.includes(eye))
+function customValidation(input, people){
+  for (let i = 0; i < people.length; i++){
+    if(input == people[i].firstName || people[i].lastName || people[i].gender || people[i].eyeColor || people[i].occupation){
+      return true
   }
+    else {
+      return false
+    }
+  
+
+
+  // let isValid = people.filter(function(potentialMatch){
+  //   if(potentialMatch.firstName.includes(input) || potentialMatch.lastName.includes(input) || potentialMatch.gender.includes(input) || potentialMatch.eyeColor.includes(input) || potentialMatch.occupation.includes(input)){
+  //     return true
+  //   }
+  //   else {
+  //     return false
+  //   }
+  // })
+}
+return isValidInput
 }
 app(data);
 //#endregion
