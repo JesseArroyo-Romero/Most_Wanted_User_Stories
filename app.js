@@ -375,25 +375,25 @@ function autoValid(input){
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
 function customValidation(input, people){
-  for (let i = 0; i < people.length; i++){
-    if(input == people[i].firstName || people[i].lastName || people[i].gender || people[i].eyeColor || people[i].occupation){
-      return true
-  }
-    else {
-      return false
-    }
-  
-
-
-  // let isValid = people.filter(function(potentialMatch){
-  //   if(potentialMatch.firstName.includes(input) || potentialMatch.lastName.includes(input) || potentialMatch.gender.includes(input) || potentialMatch.eyeColor.includes(input) || potentialMatch.occupation.includes(input)){
+  // for (let i = 0; i < people.length; i++){
+  //   if(input === people[i] ){
   //     return true
-  //   }
+  // }
   //   else {
   //     return false
   //   }
-  // })
-}
+  
+
+
+  let isValid = people.filter(function(potentialMatch){
+    if(potentialMatch.firstName.includes(input) || potentialMatch.lastName.includes(input) || potentialMatch.gender.includes(input) || potentialMatch.eyeColor.includes(input) || potentialMatch.occupation.includes(input)){
+      return true
+    }
+    else {
+      return false
+    }
+  })
+
 return isValidInput
 }
 app(data);
