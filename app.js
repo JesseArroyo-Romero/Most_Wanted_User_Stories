@@ -65,12 +65,15 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     displayPerson(person);
+    mainMenu(person, people);
     break;
     case "family":
     alert(displayFamily(person, people));
+    mainMenu(person, people);
     break;
     case "descendants":
     searchForKids(person, people);
+    mainMenu(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -165,7 +168,7 @@ function searchByParentID(person, people){
       return true
     }
     else {
-      return false;
+      return false, 'No Parents';
     }
   })
   return foundPerson
@@ -244,6 +247,7 @@ function searchForSiblings(person, people){
         return false
       }
     })
+    return siblings
   }
   if (parents.length === 1){
     let parent1 = parents[0];
@@ -255,15 +259,21 @@ function searchForSiblings(person, people){
         return false
       }
     })
+    return siblings
   }
-  if(siblings.length > 0){
-      return siblings = giveName(siblings)
-      
+  if (searchedPerson.length > 0){
+    siblings = people.filter(function(potentialMatch){
+      if (potentialMatch.parents.includes(parents.id)){
+        return siblings = giveName(siblings)
+          }
+      else {
+        return false, 'No Siblings'
     }
-    else{
-      return siblings = 'No Siblings'
-    }
-    }
+  })
+  }
+  return siblings
+}
+  
 
 
     function searchForKids(person, people){
