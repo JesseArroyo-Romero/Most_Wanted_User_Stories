@@ -15,27 +15,24 @@ function app(people){
       searchResults = searchByName(people);
       break;
       case 'no':
-        let multiSearchYesNo = promptFor("Do you know want to search with multiple criteria?", yesNo).toLowerCase();
+        let multiSearchYesNo = promptFor("Do you want to search with multiple criteria?", yesNo).toLowerCase();
         if(multiSearchYesNo === 'yes'){
         searchMultiple = searchByCriteria(people);
         }
         else{
-          let searchOne = promptFor("What do you want to search by ?", customValidation, 'menu', people)
+          let searchOne = promptFor("What do you want to search by ? \n gender? \n eye color? \n height and weight? \n occupation? ", customValidation, 'menu', people)
           switch(searchOne){
             case "gender":
             displayPeople(searchByGender(people))
             break;
-            case "":
-            //
+            case "eye color":
+            displayPeople(searchByEyeColor(people))
             break;
-            case "":
-            // 
+            case "height and weight":
+            displayPeople(searchByHeightAndWeight(people))
             break;
-            case "":
-            // 
-            break;
-            case "":
-            //
+            case "occupation":
+            displayPeople(searchByOccupation(people))
             break;
             case "quit":
             return; // stop execution
@@ -94,8 +91,8 @@ function mainMenu(person, people){
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people){
-  let firstName = promptFor("What is the person's first name?", customValidation, 'firstName');
-  let lastName = promptFor("What is the person's last name?", customValidation, 'lastName');
+  let firstName = promptFor("What is the person's first name?", customValidation, 'firstName', people);
+  let lastName = promptFor("What is the person's last name?", customValidation, 'lastName', people);
 
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.firstName === firstName && potentialMatch.lastName === lastName){
@@ -121,7 +118,7 @@ function searchByCriteria(people){
 }
 
 function searchByEyeColor(people){
-  let eyeColor = promptFor("What is the person's eye color?", customValidation, 'eyeColor')
+  let eyeColor = promptFor("What is the person's eye color?", customValidation, 'eyeColor', people)
 
   let foundEyeColor = people.filter(function(potentialMatch){
     if(potentialMatch.eyeColor === eyeColor){
@@ -132,7 +129,7 @@ function searchByEyeColor(people){
     }
 })
 
-return foundPerson
+return foundEyeColor
 }
 
 function searchByGender(people){
@@ -176,8 +173,8 @@ function searchByParentID(person, people){
 
 
 function searchByHeightAndWeight(people){
-  let height = promptFor("What is the person's height? ", customValidation, 'height')
-  let weight = promptFor("What is the person's weight? ", customValidation, 'weight')
+  let height = promptFor("What is the person's height? ", customValidation, 'height', people)
+  let weight = promptFor("What is the person's weight? ", customValidation, 'weight', people)
 
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.height == height && potentialMatch.weight == weight){
@@ -191,7 +188,7 @@ function searchByHeightAndWeight(people){
 }
 
 function searchByOccupation(people){
-  let occupation = promptFor("What is the person's job? ", customValidation, 'occupation')
+  let occupation = promptFor("What is the person's job? ", customValidation, 'occupation', people)
 
   let foundPerson = people.filter(function(potentialMatch){
     if (potentialMatch.occupation == occupation){
@@ -294,9 +291,9 @@ function giveName(names) {
 
   let namesCompleted = (names[0].firstName + ' ' + names[0].lastName + ' ')
 for(let i = 1; i < names.length; i++){
-  namesCompleted += names[i].firstName + ' ' + names[i].lastName
+  namesCompleted += + names[i].firstName + ' ' + names[i].lastName 
 }
-return namesCompleted
+return namesCompleted 
 }
 //#endregion
 
@@ -389,7 +386,6 @@ function customValidation(input, people, item){
 }
 
 if(item==='firstName'){
-  
   for (let i = 0; i < people.length; i++){
     if(input === people[i].firstName){
       return isValidInput = true
@@ -399,7 +395,6 @@ if(item==='firstName'){
 }
 
 if(item==='lastName'){
-
   for (let i = 0; i < people.length; i++){
     if(input === people[i].lastName){
       return isValidInput = true
@@ -410,8 +405,12 @@ if(item==='lastName'){
 
 if(item==='height'){
   for (let i = 0; i < people.length; i++){
-    if(input === people[i].height){
+    let newInput = parseInt(input)
+    if(newInput === people[i].height){
       return isValidInput = true
+    }
+    else {
+
     }
   }
   return isValidInput = false
@@ -419,14 +418,17 @@ if(item==='height'){
 
 if(item==='weight'){
   for (let i = 0; i < people.length; i++){
-    if(input === people[i].weight){
+    let newInput = parseInt(input)
+    if(newInput === people[i].weight){
       return isValidInput = true
+    }
+    else {
     }
   }
   return isValidInput = false
 }
 
-if(item==='eyeColor'){
+if(item==='eye color'){
   item.toLowerCase()
   for (let i = 0; i < people.length; i++){
     if(input === people[i].eyeColor){
@@ -448,7 +450,7 @@ if(item==='occupation'){
 
 if(item==='menu'){
   item.toLowerCase()
-  if (input === 'gender'){
+  if (input === 'gender' || input === 'eye color' || input === 'height and weight' || input === 'occupation'){
     return isValidInput = true
   }
     
