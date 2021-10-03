@@ -20,9 +20,10 @@ function app(people){
         searchMultiple = searchByCriteria(people);
         }
         else{
-          switch(asdfasdf/*this will be the switch case for just one search criteria*/){
+          let searchOne =promptFor("What do you want to search by ?")
+          switch(searchOne){
             case "":
-            //
+            // display()
             break;
             case "":
             //
@@ -72,7 +73,7 @@ function mainMenu(person, people){
     alert(displayFamily(person, people));
     break;
     case "descendants":
-    alert(searchForKids(person, people));
+    searchForKids(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -111,6 +112,9 @@ function searchByCriteria(people){
   let person = searchByGender(people)  
   person = searchByHeightAndWeight(person)
   person = searchByOccupation(person)
+  if (person.length > 1 ){
+    alert()
+  }
   console.log(people)
   console.log(person[0])
   mainMenu(person[0], people)
@@ -132,7 +136,7 @@ return foundPerson
 }
 
 function searchByGender(people){
-  let gender = promptFor("What is the person's gender?", autoValid)
+  let gender = promptFor("What is the person's gender?", autoValid(sdka, asdas))
 
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.gender === gender){
@@ -228,14 +232,13 @@ function searchForParents(person, people){              //Returns parents first 
     return 'No Parents'
   }
 }
-
 function searchForSiblings(person, people){
   let searchedPerson = person
-  let bothParents = searchByParentID(person, people)
-  let parent1 = bothParents[0];
-  let parent2 = bothParents[1];
+  let parents = searchByParentID(person, people)
   let siblings;
-  if (bothParents.length > 0){
+  if (parents.length === 2){
+    let parent1 = parents[0];
+    let parent2 = parents[1];
     siblings = people.filter(function(potentialMatch){
       if ((potentialMatch.parents.includes(parent1.id) || potentialMatch.parents.includes(parent2.id)) && searchedPerson.id != potentialMatch.id){
         return true
@@ -244,9 +247,27 @@ function searchForSiblings(person, people){
         return false
       }
     })
+  }
+  if (parents.length === 1){
+    let parent1 = parents[0];
+    siblings = people.filter(function(potentialMatch){
+      if ((potentialMatch.parents.includes(parent1.id) && searchedPerson.id != potentialMatch.id)){
+        return true
+      }
+      else {
+        return false
+      }
+    })
+  }
+  if(siblings.length > 0){
+      return siblings = giveName(siblings)
+      
     }
-      return siblings
+    else{
+      return siblings = 'No Siblings'
     }
+    }
+
 
     function searchForKids(person, people){
       let kids = []
@@ -259,24 +280,24 @@ function searchForSiblings(person, people){
           }
           
         })
-        return kids
+        if(kids.length > 0 ){
+        alert(giveName(kids))
+        }
+        else{ 
+          alert('No Kids')
+          app(people)
+        }
     }
   
 //function to name people
-function giveName() {
-for(let i = 0; i > array.length; ){
+function giveName(names) {
 
+  let namesCompleted = (names[0].firstName + ' ' + names[0].lastName + ' ')
+for(let i = 1; i < names.length; i++){
+  namesCompleted += names[i].firstName + ' ' + names[i].lastName
 }
+return namesCompleted
 }
-  
-  
-  
-
-
-
-
-
-
 //#endregion
 
 //Display functions.
@@ -302,8 +323,6 @@ function displayPerson(person){
   personInfo += "weight: " + person.weight + "\n";
   personInfo += "eyecolor: " + person.eyeColor + "\n";
   personInfo += "occupation: " + person.occupation + "\n";
-  personInfo += "parents: " + person.parents + "\n";
-  personInfo += "current spouse: " + person.currentSpouse + "\n";
  alert(personInfo);
 }
 
@@ -315,10 +334,8 @@ function displayFamily(person, people){
   let spouse = searchForSpouse(person, people)
   let parents = searchForParents(person, people)
   let siblings = searchForSiblings(person, people)
-  let kids = searchForKids(person, people) 
-  return spouse, parents, siblings, kids
+  return "Spouse: " + spouse + "\n" + "Parent(s): " + parents + "\n" +  "Siblings: " + siblings
 }
-
 //#endregion
 
 //Validation functions.
@@ -330,11 +347,11 @@ function displayFamily(person, people){
 //response: Will capture the user input.
 //isValid: Will capture the return of the validation function callback. true(the user input is valid)/false(the user input was not valid).
 //this function will continue to loop until the user enters something that is not an empty string("") or is considered valid based off the callback function(valid).
-function promptFor(question, valid){
+function promptFor(question, valid, people){
   let isValid;
   do{
     var response = prompt(question).trim();
-    isValid = valid(response);
+    isValid = valid(response, people);
   } while(response === ""  ||  isValid === false)
   return response;
 }
@@ -357,10 +374,12 @@ function autoValid(input){
 
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
-function customValidation(input, item){
-  let isValid = people.filter(function(potentialMatch)){
+function customValidation(input){
+  let isValid = people.filter(function(potentialMatch){
     if(potentialMatch.item.includes(eye))
-  }
+    return false
+  })
+
 }
 app(data);
 //#endregion
