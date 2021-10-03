@@ -163,15 +163,15 @@ function searchByID(people, id = promptFor("What's is the person's ID?")){
 }
 
 function searchByParentID(person, people){
-  let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.id == person.parents[0] || potentialMatch.id == person.parents[1]){
+  let foundParent = people.filter(function(potentialMatch){
+    if(potentialMatch.id === person.parents[0] || potentialMatch.id === person.parents[1]){
       return true
     }
     else {
-      return false, 'No Parents';
+      return false
     }
   })
-  return foundPerson
+  return foundParent
 }
 
 
@@ -259,7 +259,7 @@ function searchForSiblings(person, people){
         return false
       }
     })
-    return siblings
+    return siblings = giveName(siblings)
   }
   if (searchedPerson.length > 0){
     siblings = people.filter(function(potentialMatch){
@@ -267,11 +267,13 @@ function searchForSiblings(person, people){
         return siblings = giveName(siblings)
           }
       else {
-        return false, 'No Siblings'
+        return false
     }
   })
   }
-  return siblings
+  if (parents.length <= 0){
+    return siblings = 'No Siblings'
+  }
 }
   
 
@@ -299,10 +301,9 @@ function searchForSiblings(person, people){
 //function to name people
 function giveName(names) {
 
-  let namesCompleted = (names[0].firstName + ' ' + names[0].lastName + ' ')
-for(let i = 1; i < names.length; i++){
-  namesCompleted += + names[i].firstName + ' ' + names[i].lastName 
-}
+  let namesCompleted = (names.map(function(names){
+    return names.firstName + " " + names.lastName;
+  }).join('\n'))
 return namesCompleted 
 }
 //#endregion
