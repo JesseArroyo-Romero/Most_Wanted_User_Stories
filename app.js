@@ -109,15 +109,57 @@ function searchByName(people){
 }
 
 function searchByCriteria(people){
-  let person = searchByGender(people)  
-  person = searchByHeightAndWeight(person)
-  person = searchByOccupation(person)
-  if (person.length > 1 ){
-    alert()
+let response = promptFor("Do you know the person's id? Yes or No? ", yesNo).toLocaleLowerCase();
+if (response == 'yes'){
+  let person = searchByID(people)
+  mainMenu(person, people)
+}
+
+  response = promptFor("Do you know the person's gender? Yes or No? ", yesNo).toLocaleLowerCase();
+  let searchedGroup = people
+  if (response == 'yes'){
+    searchedGroup = searchByGender(searchedGroup)  
   }
-  console.log(people)
-  console.log(person[0])
-  mainMenu(person[0], people)
+  else if (response == 'no'){
+    
+  }
+
+  response = promptFor("Do you know the person's height and weight? Yes or No? ", yesNo).toLocaleLowerCase();
+  if (response == 'yes'){
+    searchedGroup = searchByHeightAndWeight(searchedGroup)
+  }
+  else if (response =='no'){
+
+  }
+  
+  response = promptFor("Do you know the person's occupation? Yes or No? ", yesNo).toLocaleLowerCase();
+  if (response == 'yes'){
+    searchedGroup = searchByOccupation(searchedGroup)
+  }
+  else if (response == 'no'){
+
+  }
+
+  response = promptFor("Do you know the person's eye color? Yes or No? ", yesNo).toLocaleLowerCase();
+  if (response == 'yes'){
+    searchedGroup = searchByEyeColor(searchedGroup)
+  }
+  else if (response == 'no'){
+
+  }
+
+
+  if (searchedGroup.length > 1){
+    displayPeople(searchedGroup)
+    return app(people)
+  }
+  else if (searchedGroup.length = 1){
+    let person = searchedGroup[0]
+    mainMenu(person, people)
+  }
+  else {
+    app(people)
+  }
 }
 
 function searchByEyeColor(people){
@@ -150,7 +192,7 @@ function searchByGender(people){
 return foundPerson
 }
 
-function searchByID(people, id = promptFor("What's is the person's ID?")){
+function searchByID(people, id = promptFor("What's is the person's ID? ", customValidation, 'id', people)){
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.id == id){
       return true;
@@ -236,6 +278,7 @@ function searchForSiblings(person, people){
   let searchedPerson = person
   let parents = searchByParentID(person, people)
   let siblings;
+  if (parents.length > 0){
   if (parents.length === 2){
     let parent1 = parents[0];
     let parent2 = parents[1];
@@ -247,7 +290,6 @@ function searchForSiblings(person, people){
         return false
       }
     })
-    return siblings
   }
   if (parents.length === 1){
     let parent1 = parents[0];
@@ -259,7 +301,6 @@ function searchForSiblings(person, people){
         return false
       }
     })
-    return siblings = giveName(siblings)
   }
   if (searchedPerson.length > 0){
     siblings = people.filter(function(potentialMatch){
@@ -271,9 +312,16 @@ function searchForSiblings(person, people){
     }
   })
   }
-  if (parents.length <= 0){
+  if (siblings.length >= 1){
+    return siblings = giveName(siblings)
+  }
+  else {
     return siblings = 'No Siblings'
   }
+}
+else {
+  return siblings = 'No Siblings'
+}
 }
   
 
@@ -466,6 +514,16 @@ if(item==='menu'){
   }
     
   
+  return isValidInput = false
+}
+
+if(item==='id'){
+  let newInput = parseInt(input)
+  for (let i = 0; i < people.length; i++){
+    if(newInput === people[i].id){
+      return isValidInput = true
+    }
+  }
   return isValidInput = false
 }
 
